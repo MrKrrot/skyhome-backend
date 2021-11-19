@@ -12,12 +12,8 @@ if (MONGO_DB_URI && MONGO_DB_URI_TEST) {
 }
 
 (async () => {
-    try {
-        const db = await mongoose.connect(connectionString)
-        console.log(`Database is connected to: ${db.connection.name}`)
-    } catch (err) {
-        console.log(`Failed to connect to the database: ${err}`)
-    }
+    const db = await mongoose.connect(connectionString)
+    console.log(`Database is connected to: ${db.connection.name}`)
 })()
 
 process.on('uncaughtException', err => {
