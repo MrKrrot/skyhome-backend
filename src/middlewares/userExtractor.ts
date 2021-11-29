@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { decodedToken } from '../interfaces/decodedToken'
+import { decodedToken } from '../../types/decodedToken'
 
 export default (req: Request, res: Response, next: NextFunction) => {
     const authorization = req.get('authorization')
