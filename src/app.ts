@@ -6,6 +6,7 @@ import './database.ts'
 // Routes
 import registerRoutes from './routes/register.routes'
 import loginRoutes from './routes/login.routes'
+import fm from './routes/fm.routes'
 import errorHandler from './middlewares/handleError'
 
 dotenv.config()
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }))
 //* Routes
 app.use(registerRoutes)
 app.use(loginRoutes)
+app.use(fm)
 
 //* Error Handler
 app.use(errorHandler)
