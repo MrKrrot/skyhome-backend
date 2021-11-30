@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, NextFunction, Response } from 'express'
+import { NextFunction, Response } from 'express'
 
 const ERROR_HANDLERS = {
     CastError: (res: Response) => res.status(400).send({ error: 'id used is malformed' }),

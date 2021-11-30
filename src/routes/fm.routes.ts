@@ -4,8 +4,8 @@ import { fm, fmPath } from '../controllers/fm.controller'
 const router = Router()
 
 // GET user files and directories from index
-router.get('/fm', userExtractor, fm)
+router.get('v1/fm', userExtractor, fm)
 
 // GET user files and directories from specific folder
-router.get('/fm/:path', userExtractor, fmPath)
+router.get('v1/fm/:path', userExtractor, fmPath)
 export default router

@@ -5,6 +5,7 @@ import { decodedToken } from '../../types/decodedToken'
 export default (req: Request, res: Response, next: NextFunction) => {
     const authorization = req.get('authorization')
     let token = ''
+    // Format token and substract it without Bearer
     if (authorization && authorization.toLocaleLowerCase().startsWith('bearer')) {
         token = authorization.substring(7)
     }
