@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import bcrypt from 'bcrypt'
 import User from '../models/User'
 import fs from 'fs'
+import storage from '../lib/storage'
 
 export const register: RequestHandler = async (req, res, next) => {
     const user = req.body
@@ -20,7 +21,7 @@ export const register: RequestHandler = async (req, res, next) => {
 
     try {
         const savedUser = await newUser.save()
-        fs.mkdirSync(`${process.env.STORAGE_PATH}\\${savedUser.username}`)
+        fs.mkdirSync(`${storage}/${savedUser.username}`)
         res.status(201).json(savedUser)
     } catch (err) {
         next(err)
