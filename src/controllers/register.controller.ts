@@ -7,16 +7,27 @@ import storage from '../lib/storage'
 export const register: RequestHandler = async (req, res, next) => {
     const user = req.body
 
-    if (!user || !user.username || !user.password || !user.name) {
+    if (
+        !user ||
+        !user.username ||
+        !user.password ||
+        !user.name ||
+        !user.email ||
+        !user.confirmPassword
+    ) {
         return res.status(400).json({ message: 'user info is missing' })
     }
 
+    if (!(user.password === user.confirmPassword)) {
+        return res.status(400).json({ message: 'Passwords do not match' })
+    }
     const passwordHash = await bcrypt.hash(user.password, 10)
 
     const newUser = new User({
         username: user.username,
         password: passwordHash,
         name: user.name,
+        email: user.email,
     })
 
     try {

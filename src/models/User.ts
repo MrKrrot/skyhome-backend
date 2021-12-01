@@ -8,6 +8,10 @@ const userSchema = new Schema({
     },
     password: String,
     name: String,
+    email: {
+        type: String,
+        unique: true,
+    },
 })
 
 userSchema.set('toJSON', {

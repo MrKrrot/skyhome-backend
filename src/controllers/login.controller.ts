@@ -6,9 +6,22 @@ import User from '../models/User'
 export const login: RequestHandler = async (req, res, next) => {
     try {
         const { body } = req
-        const { username } = body
+        const { username, email } = body
 
-        const user = await User.findOne({ username })
+        if (!username && !email) {
+            return res.status(400).json({ message: 'No username or email added' })
+        }
+
+        let user
+        // Login with username
+        if (username) {
+            user = await User.findOne({ username })
+        }
+        // Login with email
+        if (email) {
+            user = await User.findOne({ email })
+        }
+        // Compare if the password is correct
         const passCorrect =
             user === null ? false : await bcrypt.compare(body.password, user.password)
         if (!(user && passCorrect)) {
@@ -18,6 +31,7 @@ export const login: RequestHandler = async (req, res, next) => {
         const userForToken = {
             id: user._id,
             username: user.username,
+            email: user.email,
         }
         if (process.env.SECRET_TOKEN) {
             const token = jwt.sign(userForToken, process.env.SECRET_TOKEN)
@@ -25,10 +39,11 @@ export const login: RequestHandler = async (req, res, next) => {
             res.json({
                 name: user.name,
                 username: user.username,
+                email: user.email,
                 token,
             })
         } else {
-            return res.status(500).json({ error: 'found a problem with token' })
+            return res.status(500).json({ error: 'Secret Token is missing' })
         }
     } catch (error) {
         next(error)
