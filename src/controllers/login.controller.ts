@@ -12,15 +12,9 @@ export const login: RequestHandler = async (req, res, next) => {
             return res.status(400).json({ message: 'No username or email added' })
         }
 
-        let user
-        // Login with username
-        if (username) {
-            user = await User.findOne({ username })
-        }
-        // Login with email
-        if (email) {
-            user = await User.findOne({ email })
-        }
+        // Find user by username or email
+        const user = username ? await User.findOne({ username }) : await User.findOne({ email })
+
         // Compare if the password is correct
         const passCorrect =
             user === null ? false : await bcrypt.compare(body.password, user.password)
