@@ -14,6 +14,8 @@ router.post('/v1/users/login', loginController)
 
 //* Change password
 router.put('/v1/users', userExtractor, changePasswordController)
+
+//TODO Delete user controller
 //* Delete user
 router.delete('/v1/users', userExtractor)
 

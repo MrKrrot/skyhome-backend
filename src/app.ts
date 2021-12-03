@@ -5,6 +5,7 @@ import './database'
 import usersRoutes from './routes/users.routes'
 import fmRoutes from './routes/fm.routes'
 import filesRoutes from './routes/files.routes'
+import foldersRoutes from './routes/folders.routes'
 import errorHandler from './middlewares/handleError'
 
 dotenv.config()
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(usersRoutes)
 app.use(fmRoutes)
 app.use(filesRoutes)
+app.use(foldersRoutes)
 
 //* Error Handler
 app.use(errorHandler)

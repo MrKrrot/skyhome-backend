@@ -14,7 +14,7 @@ export const fileManagerController: RequestHandler = async (
     try {
         const user = await User.findById(userId)
         if (!user) {
-            return res.status(500).json({ message: 'error founded user' })
+            return res.status(500).json({ message: 'Error founded user' })
         }
         const userPath = await getPath(user.username)
 
@@ -57,12 +57,9 @@ export const fileManagerPathController: RequestHandler = async (
         const parentFolder = await Folder.findById(path)
         const user = await User.findById(userId)
 
-        if (!user) {
-            return res.status(500).json({ message: 'error founded user' })
-        }
-        if (!parentFolder) {
-            return res.status(400).json({ message: 'This folder does not exists' })
-        }
+        if (!user) return res.status(500).json({ message: 'Error founded user' })
+        if (!parentFolder) return res.status(400).json({ message: 'This folder does not exists' })
+
         const userPath = await getPath(`${user.username}/${parentFolder.path}`)
 
         const content = {
