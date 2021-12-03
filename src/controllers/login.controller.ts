@@ -41,8 +41,6 @@ export const loginController: RequestHandler = async (
                 email: user.email,
                 token,
             })
-        } else {
-            return res.status(500).json({ error: 'Secret Token is missing' })
         }
     } catch (error) {
         next(error)
