@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import User from '../models/User'
+import secretToken from '../lib/token'
 
 export const loginController: RequestHandler = async (
     req: Request,
@@ -31,8 +32,8 @@ export const loginController: RequestHandler = async (
             username: user.username,
             email: user.email,
         }
-        if (process.env.SECRET_TOKEN) {
-            const token = jwt.sign(userForToken, process.env.SECRET_TOKEN)
+        if (secretToken) {
+            const token = jwt.sign(userForToken, secretToken)
 
             res.json({
                 name: user.name,

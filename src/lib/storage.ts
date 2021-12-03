@@ -5,8 +5,8 @@ const storage = process.env.STORAGE_PATH
 
 if (!storage) {
     console.error(
-        'Storage path is not defined',
-        'set a value for STORAGE_PATH environment variable'
+        'Storage path is not defined.',
+        'Set a value for STORAGE_PATH environment variable'
     )
     process.exit(1)
 }
