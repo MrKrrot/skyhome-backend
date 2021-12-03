@@ -13,7 +13,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     try {
         if (process.env.SECRET_TOKEN) {
             const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN)
-            console.log(decodedToken)
+
             if (!token || !(decodedToken as decodedToken).id) {
                 return res.status(401).json({ error: 'token missing or invalid' })
             }

@@ -1,9 +1,13 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { RequestHandler } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import User from '../models/User'
 
-export const login: RequestHandler = async (req, res, next) => {
+export const loginController: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const { body } = req
         const { username, email } = body
@@ -19,7 +23,7 @@ export const login: RequestHandler = async (req, res, next) => {
         const passCorrect =
             user === null ? false : await bcrypt.compare(body.password, user.password)
         if (!(user && passCorrect)) {
-            return res.status(400).json({ error: 'invalid user or password' })
+            return res.status(400).json({ message: 'invalid user or password' })
         }
 
         const userForToken = {

@@ -1,14 +1,21 @@
-import { RequestHandler } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import getPath from '../lib/path'
 import Folder from '../models/Folder'
 import User from '../models/User'
 
-// User File Manager Controller from index path
-export const fm: RequestHandler = async (req, res, next) => {
+//* User File Manager Controller from index path
+export const fileManagerController: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const { userId } = req
 
     try {
         const user = await User.findById(userId)
+        if (!user) {
+            return res.status(500).json({ message: 'error founded user' })
+        }
         const userPath = await getPath(user.username)
 
         const content = {
@@ -37,8 +44,12 @@ export const fm: RequestHandler = async (req, res, next) => {
     }
 }
 
-// User File Manager Controller from specific path
-export const fmPath: RequestHandler = async (req, res, next) => {
+//* User File Manager Controller from specific path
+export const fileManagerPathController: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const path = req.params.path
     const { userId } = req
 
@@ -46,6 +57,9 @@ export const fmPath: RequestHandler = async (req, res, next) => {
         const parentFolder = await Folder.findById(path)
         const user = await User.findById(userId)
 
+        if (!user) {
+            return res.status(500).json({ message: 'error founded user' })
+        }
         if (!parentFolder) {
             return res.status(400).json({ message: 'This folder does not exists' })
         }

@@ -1,6 +1,6 @@
 import app from './app'
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000
 
 // Turn on the server
 app.listen(PORT, () => {

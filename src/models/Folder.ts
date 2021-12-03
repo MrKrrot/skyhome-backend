@@ -1,6 +1,14 @@
 import { Schema, model } from 'mongoose'
 
-const folderSchema = new Schema({
+interface Folder {
+    folderName: string
+    user: string
+    path: string
+    parentPath: string
+    children: Array<string>
+}
+
+const folderSchema = new Schema<Folder>({
     folderName: String,
     user: String,
     path: String,
@@ -16,4 +24,4 @@ folderSchema.set('toJSON', {
     },
 })
 
-export default model('Folder', folderSchema)
+export default model<Folder>('Folder', folderSchema)

@@ -1,12 +1,10 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import './database.ts'
-
-// Routes
-import registerRoutes from './routes/register.routes'
-import loginRoutes from './routes/login.routes'
-import fm from './routes/fm.routes'
+import './database'
+import usersRoutes from './routes/users.routes'
+import fmRoutes from './routes/fm.routes'
+import filesRoutes from './routes/files.routes'
 import errorHandler from './middlewares/handleError'
 
 dotenv.config()
@@ -18,9 +16,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 //* Routes
-app.use(registerRoutes)
-app.use(loginRoutes)
-app.use(fm)
+app.use(usersRoutes)
+app.use(fmRoutes)
+app.use(filesRoutes)
 
 //* Error Handler
 app.use(errorHandler)
