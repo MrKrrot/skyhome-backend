@@ -27,26 +27,37 @@ These are the names of the variables and what do you need to put in the values:
 | MONGO_DB_URI      | string | Link of the MongoDB database                           |
 | MONGO_DB_URI_TEST | string | Link of the MongoDB database for testing               |
 
-## **URL**
+Now that you put the variables in the `.env` file you can run these commands
 
-`http://localhost:5000/v1`
+For Development
+
+```bash
+yarn dev
+```
+
+For Production
+
+```bash
+yarn build # Run this command once.
+yarn start
+```
 
 ## **Endpoints**
 
 -   /login
-    -   POST
+    -   [x] POST
 -   /register
-    -   POST
+    -   [x] POST
 -   /folders
-    -   POST
-    -   PUT
-    -   DEL
+    -   [x] POST
+    -   [ ] PUT
+    -   [x] DEL
 -   /files
-    -   POST
-    -   PUT
-    -   DEL
+    -   [ ] POST
+    -   [ ] PUT
+    -   [ ] DEL
 -   /users:
-    -   DEL
-    -   PUT
+    -   [x] DEL
+    -   [x] PUT
 -   /fm
-    -   GET
+    -   [x] GET
