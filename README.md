@@ -10,21 +10,13 @@ To install SkyHome Backend clone the repo in your local machine
 git clone https://github.com/MrKrrot/skyhome-backend.git
 ```
 
-Now install the dependencies using the package manager of your preference
+Now install the dependencies using `yarn` package manager
 
 ```bash
-# npm
-npm install
-```
-
-or
-
-```bash
-# yarn
 yarn install
 ```
 
-Once the dependencies are installed create an `.env` file. In this file you will create the environment variables that needs the backend to work.
+Once the dependencies are installed create an `.env` file in root directory. In this file you will create the environment variables that needs the backend to work.
 These are the names of the variables and what do you need to put in the values:
 
 | Name              | Type   | Description                                            |
