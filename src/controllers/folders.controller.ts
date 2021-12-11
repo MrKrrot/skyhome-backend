@@ -21,7 +21,7 @@ export const createFolderController: RequestHandler = async (
 
         const userPath = await getPath(user.username)
         await fs.promises.mkdir(`${userPath.path}/${folderName}`)
-
+        await userPath.close()
         const newFolder = new Folder({
             folderName,
             user: userId,
@@ -101,17 +101,59 @@ export const renameFolderController: RequestHandler = async (
 ) => {
     const folderId = req.params.folderId
     const newFolderName = req.body.folderName
+    const { userId } = req
 
     if (!newFolderName) return res.status(400).json({ mesage: 'No folder name was specified' })
 
     try {
         const folderToRename = await Folder.findById(folderId)
+        const user = await User.findById(userId)
 
         if (!folderToRename) return res.status(400).json({ message: 'Folder does not exists' })
+        if (!user) return res.status(400).json({ message: 'Error founded user' })
+
+        const oldFolderName = folderToRename.folderName
+        const pathToChange = await getPath(`${user.username}${folderToRename.path}`)
+        const oldPath = folderToRename.path
 
         folderToRename.folderName = newFolderName
 
-        return res.json(folderToRename)
+        // Substract Disk path
+        const indexOfDisk = pathToChange.path.lastIndexOf(oldFolderName)
+        const substractedDiskPath = pathToChange.path.substring(0, indexOfDisk)
+
+        // Substract DB path
+        const indexOfDB = folderToRename.path.lastIndexOf(oldFolderName)
+        const substractedDBPath = folderToRename.path.substring(0, indexOfDB)
+
+        fs.renameSync(pathToChange.path, `${substractedDiskPath}${newFolderName}`)
+
+        // Get children of the folder that wants to rename to update them too
+        const childrenFolder = await Folder.find({
+            user: userId,
+            path: { $regex: `${folderToRename.path}/` },
+        })
+
+        folderToRename.path = `${substractedDBPath}${newFolderName}`
+
+        // Update children to new path and parentPath
+        childrenFolder.forEach(async child => {
+            child.path = child.path.replace(
+                `${substractedDBPath}${oldFolderName}`,
+                folderToRename.path
+            )
+            child.parentPath = child.parentPath.replace(
+                oldPath,
+                `${substractedDBPath}${newFolderName}`
+            )
+
+            await child.save()
+        })
+
+        await folderToRename.save()
+
+        pathToChange.closeSync()
+        return res.json({ message: 'Folder renamed succesfully!' })
     } catch (err) {
         next(err)
     }

@@ -37,7 +37,7 @@ export const fileManagerController: RequestHandler = async (
                 name: userFolder.folderName as string,
             })
         }
-
+        await userPath.close()
         return res.json(content).status(200)
     } catch (err) {
         next(err)
@@ -80,7 +80,7 @@ export const fileManagerPathController: RequestHandler = async (
         for (const userFolder of userFolders) {
             content.directories.push({ id: userFolder._id, name: userFolder.folderName })
         }
-
+        //await userPath.close()
         return res.json(content).status(200)
     } catch (err) {
         next(err)

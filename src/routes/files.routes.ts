@@ -16,9 +16,9 @@ router.post('/v1/files/:path', userExtractor, uploadFilesInDirectoryController)
 
 //TODO Rename files controller
 //* Rename files
-router.put('/v1/files/:id', userExtractor)
+router.put('/v1/files/:fileId', userExtractor)
 
 //TODO Delete files controller
 //* Delete files
-router.put('/v1/files/:id', userExtractor)
+router.delete('/v1/files/:fileId', userExtractor)
 export default router
