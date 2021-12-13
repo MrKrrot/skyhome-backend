@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express'
+import { ErrorRequestHandler, NextFunction, Request, Response } from 'express'
 
 const ERROR_HANDLERS = {
     CastError: (res: Response) => res.status(400).send({ error: 'id used is malformed' }),
@@ -11,8 +11,8 @@ const ERROR_HANDLERS = {
     defaultError: (res: Response, err: NodeJS.ErrnoException) =>
         res.status(500).json({ error: err }),
 }
-
-const errorHandler: any = (
+/*eslint-disable @typescript-eslint/no-unused-vars*/
+const errorHandler: ErrorRequestHandler = (
     err: NodeJS.ErrnoException,
     req: Request,
     res: Response,

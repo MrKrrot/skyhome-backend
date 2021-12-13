@@ -50,9 +50,8 @@ export const createFolderInDirectoryController: RequestHandler = async (
     const folderId = req.params.folderId
     const folderName = req.body.folderName
     const { userId } = req
-    if (!folderName) {
-        return res.status(400).json({ message: 'No folder name was specified' })
-    }
+
+    if (!folderName) return res.status(400).json({ message: 'No folder name was specified' })
 
     try {
         const parentFolder = await Folder.findById(folderId)

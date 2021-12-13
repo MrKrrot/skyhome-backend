@@ -7,6 +7,7 @@ import fmRoutes from './routes/fm.routes'
 import filesRoutes from './routes/files.routes'
 import foldersRoutes from './routes/folders.routes'
 import errorHandler from './middlewares/handleError'
+import fileUpload from 'express-fileupload'
 
 dotenv.config()
 const app = express()
@@ -15,6 +16,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(fileUpload())
 
 //* Routes
 app.use(usersRoutes)
