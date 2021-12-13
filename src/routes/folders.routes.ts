@@ -15,7 +15,6 @@ router.post('/v1/folders', userExtractor, createFolderController)
 //* Create directory in specific folder
 router.post('/v1/folders/:folderId', userExtractor, createFolderInDirectoryController)
 
-//TODO Finish rename folder controller
 //* Rename directory
 router.put('/v1/folders/:folderId', userExtractor, renameFolderController)
 

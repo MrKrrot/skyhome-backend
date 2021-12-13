@@ -50,11 +50,11 @@ yarn start
     -   [x] POST
 -   /folders
     -   [x] POST
-    -   [ ] PUT
+    -   [x] PUT
     -   [x] DEL
 -   /files
-    -   [ ] POST
-    -   [ ] PUT
+    -   [x] POST
+    -   [x] PUT
     -   [ ] DEL
 -   /users:
     -   [x] DEL
