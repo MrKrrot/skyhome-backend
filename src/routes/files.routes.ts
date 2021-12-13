@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import {
+    deleteFileController,
+    deleteFileOnFolderController,
     renameFileController,
     renameFileControllerOnFolder,
     uploadFilesController,
@@ -16,11 +18,14 @@ router.post('/v1/files/:path', userExtractor, uploadFilesInDirectoryController)
 
 //* Rename files on index
 router.put('/v1/files/:fileName', userExtractor, renameFileController)
-//* Rename files on folder
+
+//* Rename files in direcotory
 router.put('/v1/files/:path/:fileName', userExtractor, renameFileControllerOnFolder)
 
-//TODO Delete files controller
 //* Delete files
-router.delete('/v1/files/:fileName/:path', userExtractor)
+router.delete('/v1/files/:fileName', userExtractor, deleteFileController)
+
+//* Delete files in directory
+router.delete('/v1/files/:path/:fileName', userExtractor, deleteFileOnFolderController)
 
 export default router

@@ -139,7 +139,7 @@ export const renameFileController: RequestHandler = async (
         fs.renameSync(`${userPath.path}/${fileName}`, `${userPath.path}/${newFileName}`)
 
         userPath.closeSync()
-        return res.status(200).json({ message: 'File renamed successfully' })
+        return res.status(200).json({ message: 'File renamed successfully!' })
     } catch (err) {
         next(err)
     }
@@ -170,7 +170,64 @@ export const renameFileControllerOnFolder: RequestHandler = async (
         fs.renameSync(`${userPath.path}/${fileName}`, `${userPath.path}/${newFileName}`)
         userPath.closeSync()
 
-        return res.status(200).json({ message: 'File renamed successfully' })
+        return res.status(200).json({ message: 'File renamed successfully!' })
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const deleteFileController: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const fileName = req.params.fileName
+    const { userId } = req
+
+    if (!fileName) return res.status(400).json({ message: 'No file name was specified' })
+
+    try {
+        const user = await User.findById(userId)
+
+        if (!user) return res.status(400).json({ message: 'Error founded user' })
+
+        const userPath = await getPath(user.username)
+        fs.unlinkSync(`${userPath.path}/${fileName}`)
+
+        userPath.closeSync()
+
+        return res.status(204).json({ message: 'File removed successfully!' })
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const deleteFileOnFolderController: RequestHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const fileName = req.params.fileName
+    const folderId = req.params.path
+    const { userId } = req
+
+    if (!fileName) return res.status(400).json({ message: 'No file name was specified' })
+
+    try {
+        const user = await User.findById(userId)
+
+        if (!user) return res.status(400).json({ message: 'Error founded user' })
+
+        const folder = await Folder.findById(folderId)
+        if (!folder) return res.status(400).json({ message: 'This folder does not exists' })
+
+        const userPath = await getPath(`${user.username}${folder.path}`)
+
+        fs.unlinkSync(`${userPath.path}/${fileName}`)
+
+        userPath.closeSync()
+
+        return res.status(204).json({ message: 'File removed successfully!' })
     } catch (err) {
         next(err)
     }

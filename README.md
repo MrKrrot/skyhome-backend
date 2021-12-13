@@ -29,17 +29,16 @@ These are the names of the variables and what do you need to put in the values:
 
 Now that you put the variables in the `.env` file you can run these commands
 
+For turn on the server
+
+```bash
+yarn start
+```
+
 For Development
 
 ```bash
 yarn dev
-```
-
-For Production
-
-```bash
-yarn build # Run this command once.
-yarn start
 ```
 
 ## **Endpoints**
@@ -55,7 +54,7 @@ yarn start
 -   /files
     -   [x] POST
     -   [x] PUT
-    -   [ ] DEL
+    -   [x] DEL
 -   /users:
     -   [x] DEL
     -   [x] PUT
