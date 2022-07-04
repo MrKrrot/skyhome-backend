@@ -9,6 +9,9 @@ let connectionString: string
 if (MONGO_DB_URI && MONGO_DB_URI_TEST) {
     connectionString = NODE_ENV === 'test' ? MONGO_DB_URI_TEST : MONGO_DB_URI
 } else {
+    console.error(
+        'Database uri is not defined.',
+        'Set a value for MONGO_DB_URI and MONGO_DB_URI_TEST environment variable')
     process.exit(1)
 }
 
