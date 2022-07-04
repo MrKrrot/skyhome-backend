@@ -8,6 +8,7 @@ import filesRoutes from './routes/files.routes'
 import foldersRoutes from './routes/folders.routes'
 import errorHandler from './middlewares/handleError'
 import fileUpload from 'express-fileupload'
+import morgan from 'morgan'
 
 dotenv.config()
 const app = express()
@@ -17,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(fileUpload())
-
+app.use(morgan('tiny'))
 //* Routes
 app.use(usersRoutes)
 app.use(fmRoutes)

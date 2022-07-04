@@ -49,7 +49,6 @@ export const uploadFilesController: RequestHandler = async (
                 } while (existNumberOfFile)
             }
         }
-        userPath.closeSync()
         return res.status(201).json({ message: 'Files uploaded succesfully!' })
     } catch (err) {
         next(err)
